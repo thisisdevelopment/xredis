@@ -2,7 +2,7 @@ log: info
 
 cache:
     host: 'localhost:6379'
-    pass: ''
+    pass: 'sOmE_sEcUrE_pAsS'
     db: 0
     expiration: 1500
     pool_size:  32
