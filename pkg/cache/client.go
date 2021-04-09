@@ -1,37 +1,38 @@
 package cache
 
 import (
-	"context"
-	"crypto/tls"
-	"time"
+  "context"
+  "crypto/tls"
+  "time"
 
-	"github.com/go-redis/redis/v8"
-	"github.com/logrusorgru/aurora"
-	"github.com/thisisdevelopment/go-dockly/xlogger"
+  "github.com/go-redis/redis/v8"
+  "github.com/logrusorgru/aurora"
+  "github.com/thisisdevelopment/go-dockly/xlogger"
 )
 
 // ICache defines and exposes the caching layer
 type ICache interface {
-	Set(ctx context.Context, key string, value interface{}) error
-	Get(ctx context.Context, key string) ([]byte, error)
-	Scan(ctx context.Context, partialKey string) (res []byte, err error)
+  Set(ctx context.Context, key string, value interface{}) error
+  Get(ctx context.Context, key string) ([]byte, error)
+  Scan(ctx context.Context, keyname string) ([]string, error)
+  Keys2Values(ctx context.Context, keys []string) ([]byte, error)
 }
 
 // Redis implements the ICache interface based on redis
 type Redis struct {
-	redis  *redis.Client
-	config *Config
-	log    *xlogger.Logger
+  redis  *redis.Client
+  config *Config
+  log    *xlogger.Logger
 }
 
 type Config struct {
-	Host       string
-	Pass       string
-	DB         int
-	Expiration int
-	PoolSize   int `yaml:"pool_size"`
-	MaxRetries int `yaml:"max_retries"`
-	TLS        bool
+  Host       string
+  Pass       string
+  DB         int
+  Expiration int
+  PoolSize   int `yaml:"pool_size"`
+  MaxRetries int `yaml:"max_retries"`
+  TLS        bool
 }
 
 // New constructs a cache class
