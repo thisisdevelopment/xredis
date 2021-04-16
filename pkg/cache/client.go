@@ -13,9 +13,8 @@ import (
 // ICache defines and exposes the caching layer
 type ICache interface {
   Set(ctx context.Context, key string, value interface{}) error
-  Get(ctx context.Context, key string) ([]byte, error)
+  Get(ctx context.Context, key string, value interface{}) error
   Scan(ctx context.Context, keyname string) ([]string, error)
-  Keys2Values(ctx context.Context, keys []string) ([]byte, error)
 }
 
 // Redis implements the ICache interface based on redis
